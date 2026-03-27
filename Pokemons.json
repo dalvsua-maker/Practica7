@@ -1,0 +1,145 @@
+[
+  {
+    "nombre": "pikachu",
+    "tipo": "electrico",
+    "vida": 100,
+    "defensa": 65,
+    "ataques": [
+      {
+        "nombre": "impactrueno",
+        "potencia": 40
+      },
+      {
+        "nombre": "Bola voltio",
+        "potencia": 80
+      },
+      {
+        "nombre": "Chispazo",
+        "potencia": 60
+      }
+    ]
+  },
+  {
+    "nombre": "charmander",
+    "tipo": "fuego",
+    "vida": 100,
+    "defensa": 65,
+    "ataques": [
+      {
+        "nombre": "Llama",
+        "potencia": 40
+      },
+      {
+        "nombre": "Fuego",
+        "potencia": 80
+      },
+      {
+        "nombre": "Ascuas",
+        "potencia": 60
+      }
+    ]
+  },
+  {
+    "nombre": "squirtle",
+    "tipo": "agua",
+    "vida": 100,
+    "defensa": 65,
+    "ataques": [
+      {
+        "nombre": "Agua",
+        "potencia": 40
+      },
+      {
+        "nombre": "Burbuja",
+        "potencia": 80
+      },
+      {
+        "nombre": "Agua",
+        "potencia": 60
+      }
+    ]
+  },
+  {
+    "nombre": "bulbasaur",
+    "tipo": "planta",
+    "vida": 100,
+    "defensa": 65,
+    "ataques": [
+      {
+        "nombre": "Bomba",
+        "potencia": 40
+      },
+      {
+        "nombre": "Bomba",
+        "potencia": 80
+      },
+      {
+        "nombre": "Bomba",
+        "potencia": 60
+      }
+    ]
+  },
+  {
+    "nombre": "monferno",
+    "tipo": [
+      "fuego",
+      "lucha"
+    ],
+    "vida": 100,
+    "defensa": 105,
+    "ataques": [
+      {
+        "nombre": "Ultrapuño",
+        "potencia": 40
+      },
+      {
+        "nombre": "Rueda fuego",
+        "potencia": 60
+      },
+      {
+        "nombre": "A bocajarro",
+        "potencia": 120
+      }
+    ]
+  },
+  {
+    "nombre": "Jolteon",
+    "tipo": "Electrico",
+    "vida": 100,
+    "defensa": 105,
+    "ataques": [
+      {
+        "nombre": "Ultrapuño",
+        "potencia": 40
+      },
+      {
+        "nombre": "Rueda fuego",
+        "potencia": 60
+      },
+      {
+        "nombre": "A bocajarro",
+        "potencia": 120
+      }
+    ]
+  },
+  {
+    "nombre": "pikachu shinny",
+    "tipo": "electrico",
+    "vida": 100,
+    "defensa": 65,
+    "ataques": [
+      {
+        "nombre": "impactrueno",
+        "potencia": 40
+      },
+      {
+        "nombre": "Bola voltio",
+        "potencia": 80
+      },
+      {
+        "nombre": "Chispazo",
+        "potencia": 60
+      }
+    ]
+  }
+]
