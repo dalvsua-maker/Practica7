@@ -117,21 +117,22 @@ app.post('/combate/nuevo', (req, res) => {
     const data = fs.readFileSync(path.join(__dirname, 'Pokemons.json'), 'utf8');
     const listaPokemons = JSON.parse(data);
 
-    const p1Data = listaPokemons.find(p => p.nombre.toLowerCase() === pokemon1?.toLowerCase());
-    const p2Data = listaPokemons.find(p => p.nombre.toLowerCase() === pokemon2?.toLowerCase());
+const p1Data = listaPokemons.find(p => p.nombre.toLowerCase() === pokemon1?.nombre?.toLowerCase());
+const p2Data = listaPokemons.find(p => p.nombre.toLowerCase() === pokemon2?.nombre?.toLowerCase());
+
 
     if (!p1Data || !p2Data) {
       return res.status(400).send("Uno de los pokémon no existe");
     }
 
- const nuevoCombate = {
+const nuevoCombate = {
   id: combates.length + 1,
-  // Ahora guardamos también los ataques
-  pokemon1: { ...p1Data }, 
-  pokemon2: { ...p2Data },
+  pokemon1: { ...p1Data, vida: 100 }, // Forzamos vida al máximo
+  pokemon2: { ...p2Data, vida: 100 },
   turno: 1,
   ganador: null
 };
+
 
 
     combates.push(nuevoCombate);
@@ -146,46 +147,43 @@ app.post('/combate/nuevo', (req, res) => {
 app.post("/combate/ataque", (req, res) => {
   const { id, ataque } = req.body;
 
-  // 1. Buscar el combate en tu array de combates
   const combate = combates.find((c) => c.id === Number(id));
-  if (!combate) return res.status(400).send("El combate no existe");
-
-  // 2. Identificar el nombre del Pokémon que ataca según el turno
-  const nombreAtacante = combate.turno === 1 ? combate.pokemon1.nombre : combate.pokemon2.nombre;
-
-  // 3. LEER EL JSON de Pokémon para obtener los ataques (ya que no están en el combate)
-  const listaPokemons = JSON.parse(fs.readFileSync(path.join(__dirname, 'Pokemons.json'), 'utf8'));
   
-  // 4. Buscar los datos completos del Pokémon atacante en el JSON
-  const datosCompletosAtacante = listaPokemons.find(
-    (p) => p.nombre.toLowerCase() === nombreAtacante.toLowerCase()
-  );
+  // 1. Validaciones de estado
+  if (!combate) return res.status(404).send("El combate no existe");
+  if (combate.ganador) return res.status(400).send("El combate ya terminó, el ganador fue: " + combate.ganador);
 
-  // 5. Buscar el ataque dentro de los datos del JSON
-  const ataqueEncontrado = datosCompletosAtacante?.ataques.find(
+  // 2. Determinar atacante y defensor
+  const atacante = combate.turno === 1 ? combate.pokemon1 : combate.pokemon2;
+  const defensor = combate.turno === 1 ? combate.pokemon2 : combate.pokemon1;
+
+  // 3. Buscar el ataque (ignoring case)
+  // Nota: p1Data y p2Data ya tienen los ataques porque los copiaste en /combate/nuevo
+  const ataqueEncontrado = atacante.ataques?.find(
     (a) => a.nombre.toLowerCase() === ataque?.toLowerCase()
   );
 
-  if (!ataqueEncontrado) {
-    return res.status(400).send("El ataque no existe");
-  }
+  if (!ataqueEncontrado) return res.status(400).send("Ese Pokémon no conoce ese ataque");
 
-  // 6. Lógica de daño (ejemplo: potencia / 2)
+  // 4. Lógica de daño corregida
   const danio = ataqueEncontrado.potencia / 2;
-  
-  // 7. Aplicar daño al defensor en el objeto 'combate'
-  if (combate.turno === 1) {
-    combate.pokemon2.vida -= danio;
+  defensor.vida = Math.max(0, defensor.vida - danio); // Evita vida negativa
+
+  // 5. Verificar ganador o cambiar turno
+  if (defensor.vida === 0) {
+    combate.ganador = atacante.nombre;
   } else {
-    combate.pokemon1.vida -= danio;
+    combate.turno = combate.turno === 1 ? 2 : 1;
   }
 
-  // 8. Cambiar turno
-  combate.turno = combate.turno === 1 ? 2 : 1;
-
-  // 9. Respuesta
-  res.status(200).json({ "golpe": parseFloat(danio.toFixed(3)) });
+  res.status(200).json({ 
+    golpe: danio, 
+    vida_restante_rival: defensor.vida,
+    ganador: combate.ganador 
+  });
 });
+
+
 app.post("/combate/borrar", (req, res) => {
   const { id } = req.body;
 

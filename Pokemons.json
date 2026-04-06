@@ -141,5 +141,25 @@
         "potencia": 60
       }
     ]
+  },
+  {
+    "nombre": "Snorlax",
+    "tipo": "normal",
+    "vida": 160,
+    "defensa": 110,
+    "ataques": [
+      {
+        "nombre": "Cuerpo pesado",
+        "potencia": 85
+      },
+      {
+        "nombre": "Giga impacto",
+        "potencia": 150
+      },
+      {
+        "nombre": "Golpe cuerpo",
+        "potencia": 85
+      }
+    ]
   }
 ]
