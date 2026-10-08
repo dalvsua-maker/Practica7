@@ -66,7 +66,7 @@ const combates = [
 // Definimos una función para leer el archivo y evitar repetir código
 const leerPokemons = () => {
   // Leemos el archivo físico. 'utf-8' es para que lo lea como texto y no como datos binarios
-  const data = fs.readFileSync("./pokemons.json", "utf-8");
+  const data = fs.readFileSync("./Pokemons.json", "utf-8");
   // Convertimos el texto del archivo en un objeto JS y devolvemos solo el array "items"
   return JSON.parse(data);
 };
